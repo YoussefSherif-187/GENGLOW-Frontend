@@ -1,0 +1,23 @@
+.exams-page .exam-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.status.pending {
+  color: #b45309;
+}
+
+.status.approved {
+  color: #15803d;
+}
+
+.status.cancelled {
+  color: #b91c1c;
+}
+
+.empty-state {
+  font-size: 18px;
+  color: #666;
+}

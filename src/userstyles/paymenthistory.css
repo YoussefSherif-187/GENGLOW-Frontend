@@ -1,0 +1,23 @@
+.payment-history .payment-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.payment-history .payment-row.total {
+  font-weight: 700;
+}
+
+.status.pending {
+  color: #b45309;
+}
+
+.status.completed {
+  color: #15803d;
+}
+
+.empty-state {
+  font-size: 18px;
+  color: #666;
+}

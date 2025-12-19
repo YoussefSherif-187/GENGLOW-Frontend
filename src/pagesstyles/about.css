@@ -1,0 +1,114 @@
+
+.team {
+  text-align: center;
+  margin: 60px 0;
+  padding: 40px 20px;
+}
+
+.team h2 {
+  color: #2e5a36;
+  margin-bottom: 10px;
+}
+
+.team-members {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.member {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.member h4 {
+  color: #2e5a36;
+  margin-bottom: 5px;
+}
+
+.member p {
+  color: #555;
+}
+
+  .about .text {
+    text-align: left;
+  }
+  .aboutbody {
+  width: 100%;
+  font-family: "Georgia", serif;
+  color: #2a2a2a;
+}
+
+/* HERO */
+.about-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  padding: 6rem 8%;
+  align-items: center;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-text p {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  max-width: 480px;
+}
+
+/* STORY SECTIONS */
+.story-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 5rem 8%;
+  align-items: center;
+}
+
+.story-section.reverse {
+  background: linear-gradient(to right, #ede2d6, #fff);
+}
+
+.story-text p {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  max-width: 420px;
+}
+
+
+
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .about-hero,
+  .story-section {
+    grid-template-columns: 1fr;
+    padding: 4rem 6%;
+  }
+
+
+
+  .hero-text h1 {
+    font-size: 2.4rem;
+  }
+}
+
+
+.story-image img {
+  height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.hero-image img {
+  height: 1000px;
+  object-fit: cover;
+  border-radius: 12px;
+}

@@ -1,0 +1,51 @@
+.my-orders .order-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.my-orders .order-row.total {
+  font-weight: 700;
+}
+
+.my-orders .order-products {
+  margin-top: 12px;
+}
+
+.my-orders .product-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.status.pending {
+  color: #b45309;
+}
+
+.status.shipped {
+  color: #2563eb;
+}
+
+.status.completed {
+  color: #15803d;
+}
+
+.status.cancelled {
+  color: #b91c1c;
+}
+
+.secondary-btn {
+  background: #e5e7eb;
+  color: #111827;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+
+.empty-state {
+  font-size: 18px;
+  color: #666;
+}
