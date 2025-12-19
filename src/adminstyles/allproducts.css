@@ -1,0 +1,55 @@
+.all-products .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.products-table th,
+.products-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.products-table th {
+  font-size: 14px;
+  color: #6b7280;
+}
+.file-upload {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.file-upload-btn {
+  padding: 10px 16px;
+  background-color: #19921f; /* match your primary button */
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.file-upload-btn:hover {
+  background-color: #115e15;
+}
+
+.file-name {
+  font-size: 0.85rem;
+  color: #555;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.btn-row {
+  display: flex;
+  gap: 16px; /* increase this value for more space */
+}
+

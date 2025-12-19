@@ -1,0 +1,84 @@
+/* ===============================
+   ALL SAMPLE REQUESTS (ADMIN)
+================================ */
+
+.all-sample-requests {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- SAMPLE ROWS ---------- */
+
+.sample-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.sample-row:last-child {
+  border-bottom: none;
+}
+
+.sample-row span:first-child {
+  font-weight: 600;
+  color: #444;
+}
+
+/* ---------- STATUS BADGES ---------- */
+
+.status.approved {
+  background: #d4edda;
+  color: #155724;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ---------- ADMIN ACTIONS ---------- */
+
+.admin-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+/* ---------- EMPTY & LOADING ---------- */
+
+.empty-state {
+  text-align: center;
+  color: #777;
+  padding: 40px 0;
+  font-size: 15px;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 40px 0;
+  font-size: 16px;
+  font-weight: 500;
+}

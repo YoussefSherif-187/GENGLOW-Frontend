@@ -1,0 +1,49 @@
+.all-exams .exam-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.all-exams .exam-row.notes {
+  flex-direction: column;
+  gap: 5px;
+}
+
+.all-exams .status {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.status.completed {
+  color: green;
+}
+
+.status.cancelled {
+  color: red;
+}
+
+.status.pending {
+  color: orange;
+}
+
+/* Confirm modal box */
+.confirm-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: auto;
+}
+
+.confirm-box.danger {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}

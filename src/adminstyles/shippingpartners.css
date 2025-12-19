@@ -1,0 +1,15 @@
+.shipping-partners .row {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+.shipping-partners .actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.shipping-partners input.form-input {
+  margin-bottom: 10px;
+}

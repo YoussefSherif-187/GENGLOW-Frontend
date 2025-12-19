@@ -1,0 +1,113 @@
+all-orders {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- ORDER ROWS ---------- */
+
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.order-row:last-child {
+  border-bottom: none;
+}
+
+.order-row span:first-child {
+  font-weight: 600;
+  color: #444;
+}
+
+.order-row.total {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* ---------- STATUS BADGES ---------- */
+
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.shipped {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status.completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* ---------- PRODUCTS LIST ---------- */
+
+.order-products {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px dashed #ddd;
+}
+
+.product-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 4px 0;
+  color: #555;
+}
+
+/* ---------- ADMIN ACTIONS ---------- */
+
+.admin-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ---------- UPDATE PANEL ---------- */
+
+.all-orders .danger {
+  border: 1px solid #f5c6cb;
+  background: #fff5f5;
+}
+
+.all-orders select.form-input {
+  appearance: none;
+  background-color: #fff;
+}
+
+/* ---------- EMPTY & LOADING ---------- */
+
+.empty-state {
+  text-align: center;
+  color: #777;
+  padding: 40px 0;
+  font-size: 15px;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 40px 0;
+  font-size: 16px;
+  font-weight: 500;
+}

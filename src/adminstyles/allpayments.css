@@ -1,0 +1,72 @@
+/* ===============================
+   ALL PAYMENTS (ADMIN)
+================================ */
+
+.all-payments {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- PAYMENT ROWS ---------- */
+
+.payment-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.payment-row:last-child {
+  border-bottom: none;
+}
+
+.payment-row span:first-child {
+  font-weight: 600;
+  color: #444;
+}
+
+.payment-row.total {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* ---------- STATUS BADGES ---------- */
+
+.status.completed {
+  background: #d4edda;
+  color: #155724;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ---------- EMPTY & LOADING ---------- */
+
+.empty-state {
+  text-align: center;
+  color: #777;
+  padding: 40px 0;
+  font-size: 15px;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 40px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
