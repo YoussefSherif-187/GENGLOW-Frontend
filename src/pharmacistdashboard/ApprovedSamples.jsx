@@ -6,6 +6,7 @@ import Alerts from "../comp/Alerts";
 import ConfirmModal2 from "../comp/ConfirmModal2";
 
 import "../pagesstyles/dashboard.css";
+import "../adminstyles/allsamplerequests.css"; 
 
 const PharmacistApprovedSamples = () => {
   const token = localStorage.getItem("token");
@@ -76,8 +77,9 @@ const PharmacistApprovedSamples = () => {
     <div className="layout">
       <PharmacistSidebar />
 
-      <main className="main-content samples">
+      <main className="main-content all-sample-requests">
         {alertType && <Alerts type={alertType} message={alertMessage} />}
+        <br />
 
         {/* CONFIRM STATUS UPDATE */}
         <ConfirmModal2
@@ -89,56 +91,64 @@ const PharmacistApprovedSamples = () => {
           onConfirm={() => markAsShipped(confirmUpdateId)}
         />
 
-        <h2 className="page-title">Approved Sample Requests</h2>
-
-        {/* LIST */}
         {loading ? (
           <div className="loading-state">Loading samples...</div>
         ) : samples.length === 0 ? (
           <div className="empty-state">No approved samples found</div>
         ) : (
-          samples.map((sample) => (
-            <div className="card" key={sample._id}>
-              <h3 className="card-title">Sample Request</h3>
+          <>
+            <h2 className="page-title">Approved Sample Requests</h2>
 
-              <div className="row">
-                <span>User</span>
-                <span>
-                  {sample.user?.name
-                    ? `${sample.user.name} (${sample.user.email})`
-                    : "Guest User"}
-                </span>
-              </div>
+            {samples.map((sample) => (
+              <div key={sample._id} className="card">
+                <h3 className="card-title">Sample Request</h3>
 
-              <div className="row">
-                <span>Product</span>
-                <span>{sample.product?.name}</span>
-              </div>
+                <div className="sample-row">
+                  <span>Request ID</span>
+                  <span>{sample._id}</span>
+                </div>
 
-              <div className="row">
-                <span>Status</span>
-                <span className={`status ${sample.status?.toLowerCase()}`}>
-                  {sample.status}
-                </span>
-              </div>
+                <div className="sample-row">
+                  <span>User</span>
+                  <span>
+                    {sample.user?.name
+                      ? `${sample.user.name} (${sample.user.email})`
+                      : "Guest User"}
+                  </span>
+                </div>
 
-              <div className="row">
-                <span>Requested At</span>
-                <span>
-                  {new Date(sample.createdAt).toLocaleDateString()}
-                </span>
+                <div className="sample-row">
+                  <span>Product</span>
+                  <span>{sample.product?.name}</span>
+                </div>
+
+                <div className="sample-row">
+                  <span>Status</span>
+                  <span className={`status ${sample.status?.toLowerCase()}`}>
+                    {sample.status}
+                  </span>
+                </div>
+
+                <div className="sample-row">
+                  <span>Requested On</span>
+                  <span>
+                    {new Date(sample.createdAt).toDateString()}
+                  </span>
+                </div>
+
+                {sample.status === "Approved" && (
+                  <div className="admin-actions">
+                    <button
+                      className="primary-btn"
+                      onClick={() => setConfirmUpdateId(sample._id)}
+                    >
+                      Mark as Shipped
+                    </button>
+                  </div>
+                )}
               </div>
-<br/>
-              {sample.status === "Approved" && (
-                <button
-                  className="primary-btn"
-                  onClick={() => setConfirmUpdateId(sample._id)}
-                >
-                  Mark as Shipped
-                </button>
-              )}
-            </div>
-          ))
+            ))}
+          </>
         )}
       </main>
     </div>

@@ -11,9 +11,7 @@ const Home = () => {
   const { addToCart } = useContext(CartContext);
   const [products, setProducts] = useState([]);
 
-  /* =====================
-     PRODUCT IMAGE HELPER
-  ===================== */
+
   const getProductImage = (prodId) => {
     try {
       return require(`../assets/products/${prodId}.png`);
@@ -22,9 +20,7 @@ const Home = () => {
     }
   };
 
-  /* =====================
-     FETCH PRODUCTS
-  ===================== */
+  
   useEffect(() => {
     axios
       .get("https://genglow-backend.vercel.app/api/products")
@@ -35,9 +31,7 @@ const Home = () => {
   return (
     <div>
       <div className="homebody">
-        {/* =====================
-            HERO
-        ===================== */}
+    
         <div className="hometop">
           <h1>
             <span style={{ color: "green" }}>ORGANIC CARE</span>
@@ -50,37 +44,33 @@ const Home = () => {
             <button
               type="button"
               className="btn-quiz"
-              onClick={() => navigate("/requestsample")}
-            >
-              TRY SAMPLE NOW
-            </button>
-          </div>
-        </div>
-
-        {/* =====================
-            MIDDLE CTA
-        ===================== */}
-        <div className="homemiddle">
-          <h1>Unlock Your True Glow with GENGLOW</h1>
-          <p>
-            With a quick and easy genetic test we personalize your skincare like
-            never before backed by science powered by you
-          </p>
-
-          <div className="home-cta">
-            <button
-              type="button"
-              className="btn-quiz"
-              onClick={() => navigate("/genquiz")}
+            
+               onClick={() => navigate("/genquiz")}
             >
               TAKE GENETIC QUIZ
             </button>
           </div>
         </div>
 
-        {/* =====================
-            PRODUCTS
-        ===================== */}
+
+        <div className="homemiddle">
+          <h1>Unlock Your True Glow with GENGLOW</h1>
+          <p>
+            Start with a personalized skincare sample, crafted with science and tailored to you, designed to let your skin experience the difference first.
+          </p>
+
+          <div className="home-cta">
+            <button
+              type="button"
+              className="btn-quiz"
+               onClick={() => navigate("/requestsample")}
+            >
+              TRY SAMPLE NOW
+            </button>
+          </div>
+        </div>
+
+   
         <div className="homebottom">
           <h1>
             OR BUY OUR <span style={{ color: "green" }}>PRODUCTS</span>{" "}
@@ -92,7 +82,7 @@ const Home = () => {
               {products.map((product) => (
                 <div className="col-auto" key={product._id}>
                   <div className="wsk-cp-product">
-                    {/* IMAGE → PRODUCT PAGE */}
+                
                     <div
                       className="wsk-cp-img"
                       onClick={() =>
@@ -127,7 +117,7 @@ const Home = () => {
                           </span>
                         </div>
 
-                        {/* CART ICON → ADD TO CART */}
+              
                         <button
                           className="add-to-cart-btn"
                           onClick={(e) => {

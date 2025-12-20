@@ -71,9 +71,19 @@
   grid-template-columns: 1fr 1fr;
   padding: 5rem 8%;
   align-items: center;
+  column-gap: 4rem; 
+}
+
+.story-section:not(.reverse) .story-text {
+  padding-right: 2rem;
+}
+
+.story-section.reverse .story-text {
+  padding-left: 2rem;
 }
 
 .story-section.reverse {
+  
   background: linear-gradient(to right, #ede2d6, #fff);
 }
 

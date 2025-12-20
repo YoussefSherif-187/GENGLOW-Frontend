@@ -59,6 +59,24 @@ const Genquiz = () => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ type: "", message: "" });
+   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+        const [role, setRole] = useState(localStorage.getItem("role"));
+      
+    
+       useEffect(() => {
+          const syncAuth = () => {
+            setIsLoggedIn(!!localStorage.getItem("token"));
+            setRole(localStorage.getItem("role"));
+          };
+      
+          window.addEventListener("storage", syncAuth);
+          const interval = setInterval(syncAuth, 500);
+      
+          return () => {
+            window.removeEventListener("storage", syncAuth);
+            clearInterval(interval);
+          };
+        }, []);
 
   const handleRadioChange = (id, value) => {
     setUserResponses({ ...userResponses, [id]: value });
@@ -152,6 +170,9 @@ const Genquiz = () => {
 
   const currentSection = quizQuestions[currentSectionIndex];
 
+    const showUserbutton = isLoggedIn && role === "user";
+
+
   return (
     <main>
       <section className="quiz-page">
@@ -212,18 +233,21 @@ const Genquiz = () => {
                   </button>
 
                   <span>{currentSectionIndex + 1} / {quizQuestions.length}</span>
+{showUserbutton && (
 
                   <button
                     className="btn btn-primary"
                     disabled={loading || !isCurrentSectionAnswered()}
                     onClick={navigateNext}
                   >
+                    
                     {loading
                       ? "Submitting..."
                       : currentSectionIndex === quizQuestions.length - 1
                       ? "Submit Results"
                       : "Next"}
                   </button>
+)}
                 </div>
               </>
             ) : (

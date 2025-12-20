@@ -3,7 +3,7 @@ import axios from "axios";
 
 import AdminSidebar from "../comp/AdminSidebar";
 import Alerts from "../comp/Alerts";
-import ConfirmModal from '../comp/ConfirmModal';
+import ConfirmModal from "../comp/ConfirmModal";
 
 import "../pagesstyles/dashboard.css";
 import "../adminstyles/shippingpartners.css";
@@ -25,7 +25,7 @@ const ShippingPartnerManagement = () => {
 
   const [editingPartner, setEditingPartner] = useState(null);
 
-  // ✅ SAME confirm delete pattern as SupplierManagement
+  // confirm delete
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
 
   /* ================= ALERT ================= */
@@ -129,14 +129,13 @@ const ShippingPartnerManagement = () => {
         {alertType && <Alerts type={alertType} message={alertMessage} />}
 
         <ConfirmModal
-  show={!!confirmDeleteId}
-  message="Are you sure you want to delete this shipping partner? This action cannot be undone."
-  confirmText="Yes, Delete Partner"
-  cancelText="Cancel"
-  onCancel={() => setConfirmDeleteId(null)}
-  onConfirm={() => deletePartner(confirmDeleteId)}
-/>
-
+          show={!!confirmDeleteId}
+          message="Are you sure you want to delete this shipping partner? This action cannot be undone."
+          confirmText="Yes, Delete Partner"
+          cancelText="Cancel"
+          onCancel={() => setConfirmDeleteId(null)}
+          onConfirm={() => deletePartner(confirmDeleteId)}
+        />
 
         <h2 className="page-title">Shipping Partners</h2>
 
@@ -176,102 +175,104 @@ const ShippingPartnerManagement = () => {
           </button>
         </div>
 
-        
+        {loading ? (
+          <div className="loading-state">Loading partners...</div>
+        ) : partners.length === 0 ? (
+          <div className="empty-state">No shipping partners found</div>
+        ) : (
+          partners.map((partner) => (
+            <div key={partner._id}>
+              {/* PARTNER CARD */}
+              <div className="card">
+                <strong>{partner.name}</strong>
 
-      {loading ? (
-  <div className="loading-state">Loading partners...</div>
-) : partners.length === 0 ? (
-  <div className="empty-state">No shipping partners found</div>
-) : (
-  partners.map((partner) => (
-    <div key={partner._id}>
-      {/* PARTNER CARD */}
-      <div className="card">
-        <strong>{partner.name}</strong>
+                <div className="row">
+                  <span>Partner ID</span>
+                  <span>{partner._id}</span>
+                </div>
 
-        <div className="row">
-          <span>Phone</span>
-          <span>{partner.phone}</span>
-        </div>
+                <div className="row">
+                  <span>Phone</span>
+                  <span>{partner.phone}</span>
+                </div>
 
-        <div className="row">
-          <span>Address</span>
-          <span>{partner.address}</span>
-        </div>
+                <div className="row">
+                  <span>Address</span>
+                  <span>{partner.address}</span>
+                </div>
 
-        <div className="actions-row">
-          <button
-            className="secondary-btn"
-            onClick={() => setEditingPartner({ ...partner })}
-          >
-            Edit
-          </button>
+                <div className="actions-row">
+                  <button
+                    className="secondary-btn"
+                    onClick={() => setEditingPartner({ ...partner })}
+                  >
+                    Edit
+                  </button>
 
-          <button
-            className="danger-btn"
-            onClick={() => setConfirmDeleteId(partner._id)}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
+                  <button
+                    className="danger-btn"
+                    onClick={() => setConfirmDeleteId(partner._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
 
-      {/* EDIT FORM — ONLY UNDER CLICKED PARTNER */}
-      {editingPartner?._id === partner._id && (
-        <div className="card" style={{ marginTop: "10px" }}>
-          <h3 className="card-title">Update Shipping Partner</h3>
+              {/* EDIT FORM */}
+              {editingPartner?._id === partner._id && (
+                <div className="card" style={{ marginTop: "10px" }}>
+                  <h3 className="card-title">Update Shipping Partner</h3>
 
-          <input
-            className="form-input"
-            value={editingPartner.name}
-            onChange={(e) =>
-              setEditingPartner({
-                ...editingPartner,
-                name: e.target.value,
-              })
-            }
-          />
+                  <input
+                    className="form-input"
+                    value={editingPartner.name}
+                    onChange={(e) =>
+                      setEditingPartner({
+                        ...editingPartner,
+                        name: e.target.value,
+                      })
+                    }
+                  />
 
-          <input
-            className="form-input"
-            value={editingPartner.phone}
-            onChange={(e) =>
-              setEditingPartner({
-                ...editingPartner,
-                phone: e.target.value,
-              })
-            }
-          />
+                  <input
+                    className="form-input"
+                    value={editingPartner.phone}
+                    onChange={(e) =>
+                      setEditingPartner({
+                        ...editingPartner,
+                        phone: e.target.value,
+                      })
+                    }
+                  />
 
-          <input
-            className="form-input"
-            value={editingPartner.address}
-            onChange={(e) =>
-              setEditingPartner({
-                ...editingPartner,
-                address: e.target.value,
-              })
-            }
-          />
+                  <input
+                    className="form-input"
+                    value={editingPartner.address}
+                    onChange={(e) =>
+                      setEditingPartner({
+                        ...editingPartner,
+                        address: e.target.value,
+                      })
+                    }
+                  />
 
-          <div className="actions-row">
-            <button className="primary-btn" onClick={handleUpdate}>
-              Save Changes
-            </button>
+                  <div className="actions-row">
+                    <button className="primary-btn" onClick={handleUpdate}>
+                      Save Changes
+                    </button>
 
-            <button
-              className="secondary-btn"
-              onClick={() => setEditingPartner(null)}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  ))
-)}
-
+                    <button
+                      className="secondary-btn"
+                      onClick={() => setEditingPartner(null)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))
+        )}
       </main>
     </div>
   );

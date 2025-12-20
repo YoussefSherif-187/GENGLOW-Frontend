@@ -30,7 +30,6 @@ function CartSidebar() {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
-    // 🔐 Auth + role guard
     if (!token) {
       closeCart();
       navigate("/signin");
@@ -77,8 +76,14 @@ function CartSidebar() {
   };
 
   return (
-    <div className={`cart-overlay ${isOpen ? "show" : ""}`}>
-      <div className="cart-sidebar">
+    <div
+      className={`cart-overlay ${isOpen ? "show" : ""}`}
+      onClick={closeCart}
+    >
+      <div
+        className="cart-sidebar"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="cart-header">
           <h2>CART</h2>
           <button className="close-btn" onClick={closeCart}>

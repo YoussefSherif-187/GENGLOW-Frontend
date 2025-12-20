@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {  useEffect,useState } from "react";
 import "../pagesstyles/bookexam.css"
 import axios from "axios"
 import Alerts from "../comp/Alerts" // ✅ standard import
@@ -12,6 +12,24 @@ const Bookexam = () => {
   const [loading, setLoading] = useState(false)
   const [activeFaq, setActiveFaq] = useState(null)
   const [alert, setAlert] = useState({ type: "", message: "" })
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+        const [role, setRole] = useState(localStorage.getItem("role"));
+      
+    
+       useEffect(() => {
+          const syncAuth = () => {
+            setIsLoggedIn(!!localStorage.getItem("token"));
+            setRole(localStorage.getItem("role"));
+          };
+      
+          window.addEventListener("storage", syncAuth);
+          const interval = setInterval(syncAuth, 500);
+      
+          return () => {
+            window.removeEventListener("storage", syncAuth);
+            clearInterval(interval);
+          };
+        }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -79,6 +97,7 @@ const Bookexam = () => {
         'The basic genetic test costs 1200 EGP. We also offer comprehensive packages with special discounts.'
     }
   ]
+  const showUserbutton = isLoggedIn && role === "user";
 
   return (
     <main>
@@ -122,6 +141,7 @@ const Bookexam = () => {
                   />
                 </div>
               </div>
+{showUserbutton && (
 
               <div className="form-submit">
                 <button
@@ -139,6 +159,7 @@ const Bookexam = () => {
                   <Alerts type={alert.type} message={alert.message} />
                 )}
               </div>
+)}
             </form>
           </div>
         </div>

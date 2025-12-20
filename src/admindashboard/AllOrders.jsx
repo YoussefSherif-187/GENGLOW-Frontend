@@ -199,6 +199,8 @@ const AllOrders = () => {
         >
           <option value="">Select status</option>
           <option value="Pending">Pending</option>
+           <option value="Proccessed">Proccessed</option>
+             <option value="Delivered">Delivered</option>
           <option value="Shipped">Shipped</option>
           <option value="Completed">Completed</option>
           <option value="Cancelled">Cancelled</option>

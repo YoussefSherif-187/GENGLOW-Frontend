@@ -11,7 +11,6 @@ const Navbar = () => {
   const [role, setRole] = useState(localStorage.getItem("role"));
   const { cart, setIsOpen } = useContext(CartContext);
 
-  // Sync auth + role
   useEffect(() => {
     const syncAuth = () => {
       setIsLoggedIn(!!localStorage.getItem("token"));
@@ -93,7 +92,6 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* 🛒 CART (users only) */}
           {showUserCart && (
             <div className="cart-icon-wrapper" onClick={() => setIsOpen(true)}>
               <img src={navcart} alt="Cart" className="cart-icon" />

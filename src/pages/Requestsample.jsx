@@ -1,11 +1,31 @@
-import React, { useState } from "react";
+import React, {  useEffect,useState } from "react";
 import "../pagesstyles/requestsample.css";
 import axios from "axios";
 import Alerts from "../comp/Alerts"; 
 
 const Requestsample = () => {
+  
   const [selectedSamples, setSelectedSamples] = useState([]);
   const [alert, setAlert] = useState({ type: "", message: "" });
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+      const [role, setRole] = useState(localStorage.getItem("role"));
+    
+  
+     useEffect(() => {
+        const syncAuth = () => {
+          setIsLoggedIn(!!localStorage.getItem("token"));
+          setRole(localStorage.getItem("role"));
+        };
+    
+        window.addEventListener("storage", syncAuth);
+        const interval = setInterval(syncAuth, 500);
+    
+        return () => {
+          window.removeEventListener("storage", syncAuth);
+          clearInterval(interval);
+        };
+      }, []);
+    
 
   const samples = [
     { id: "692c67e3639f7fc253aafde1", icon: "fa-pump-soap", title: "Herbal Acne Serum", desc: "Helps calm breakouts with soothing herbal extracts" },
@@ -82,6 +102,9 @@ const Requestsample = () => {
     }
   };
 
+  const showUserbutton = isLoggedIn && role === "user";
+
+
   return (
     <main>
       <section className="sample-request-section">
@@ -115,9 +138,13 @@ const Requestsample = () => {
                       </label>
                     </div>
                   ))}
+                  
                 </div>
+                   {alert.message && (
+              <Alerts type={alert.type} message={alert.message} />
+            )}
               </div>
-
+{showUserbutton && (
               <div className="form-submit">
                 <button
                   type="submit"
@@ -126,10 +153,9 @@ const Requestsample = () => {
                   Request Free Samples
                 </button>
               </div>
+              )}
               <br/>
-               {alert.message && (
-              <Alerts type={alert.type} message={alert.message} />
-            )}
+            
             </form>
           </div>
         </div>
