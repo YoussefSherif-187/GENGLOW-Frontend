@@ -59,24 +59,33 @@ const Genquiz = () => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ type: "", message: "" });
-   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
-        const [role, setRole] = useState(localStorage.getItem("role"));
-      
-    
-       useEffect(() => {
-          const syncAuth = () => {
-            setIsLoggedIn(!!localStorage.getItem("token"));
-            setRole(localStorage.getItem("role"));
-          };
-      
-          window.addEventListener("storage", syncAuth);
-          const interval = setInterval(syncAuth, 500);
-      
-          return () => {
-            window.removeEventListener("storage", syncAuth);
-            clearInterval(interval);
-          };
-        }, []);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [role, setRole] = useState(localStorage.getItem("role"));
+
+
+  const getProductImage = (prodId) => {
+    try {
+      return require(`../assets/products/${prodId}.png`);
+    } catch {
+      return require(`../assets/products/prod1.png`);
+    }
+  };
+
+  useEffect(() => {
+    const syncAuth = () => {
+      setIsLoggedIn(!!localStorage.getItem("token"));
+      setRole(localStorage.getItem("role"));
+    };
+
+    window.addEventListener("storage", syncAuth);
+    const interval = setInterval(syncAuth, 500);
+
+    return () => {
+      window.removeEventListener("storage", syncAuth);
+      clearInterval(interval);
+    };
+  }, []);
 
   const handleRadioChange = (id, value) => {
     setUserResponses({ ...userResponses, [id]: value });
@@ -162,16 +171,8 @@ const Genquiz = () => {
     }
   };
 
-  useEffect(() => {
-    if (currentSectionIndex > 0 && !quizCompleted) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [currentSectionIndex, quizCompleted]);
-
   const currentSection = quizQuestions[currentSectionIndex];
-
-    const showUserbutton = isLoggedIn && role === "user";
-
+  const showUserbutton = isLoggedIn && role === "user";
 
   return (
     <main>
@@ -233,21 +234,20 @@ const Genquiz = () => {
                   </button>
 
                   <span>{currentSectionIndex + 1} / {quizQuestions.length}</span>
-{showUserbutton && (
 
-                  <button
-                    className="btn btn-primary"
-                    disabled={loading || !isCurrentSectionAnswered()}
-                    onClick={navigateNext}
-                  >
-                    
-                    {loading
-                      ? "Submitting..."
-                      : currentSectionIndex === quizQuestions.length - 1
-                      ? "Submit Results"
-                      : "Next"}
-                  </button>
-)}
+                  {showUserbutton && (
+                    <button
+                      className="btn btn-primary"
+                      disabled={loading || !isCurrentSectionAnswered()}
+                      onClick={navigateNext}
+                    >
+                      {loading
+                        ? "Submitting..."
+                        : currentSectionIndex === quizQuestions.length - 1
+                        ? "Submit Results"
+                        : "Next"}
+                    </button>
+                  )}
                 </div>
               </>
             ) : (
@@ -256,8 +256,14 @@ const Genquiz = () => {
 
                 {recommendedProducts.map(product => (
                   <div key={product._id} className="recommended-product-card">
+                    <img
+                      src={getProductImage(product._id)}
+                      alt={product.name}
+                      className="recommended-product-img"
+                    />
+
                     <p><strong>Name:</strong> {product.name}</p>
-                    <p><strong>Price:</strong> ${product.price}</p>
+                    <p><strong>Price:</strong> {product.price} EGP</p>
                     <p><strong>Category:</strong> {product.category}</p>
 
                     <button
@@ -275,7 +281,10 @@ const Genquiz = () => {
                 <br />
 
                 {alert.message && (
-                  <Alerts type={alert.type} message={alert.message} />
+                  <>
+                    <br />
+                    <Alerts type={alert.type} message={alert.message} />
+                  </>
                 )}
               </div>
             )}

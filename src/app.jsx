@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthContext";
 import Privateroutes from "./Privateroutes";
 import PublicOnlyRoute from "./PublicOnlyRoute";
-import { CartProvider } from "./cart/CartContext";
 
 import Navbar from "./comp/navbar";
 import Footer from "./comp/Footer";
@@ -46,11 +45,11 @@ import SupplierManagement from "./admindashboard/SupplierManagement";
 import Shop from "./pages/Shop";
 import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
+import ResetPassword from "./pages/ResetPassword";
 
 export function App() {
   return (
     <>
-        <CartProvider>
 
       <Navbar />
       <CartSidebar />
@@ -70,6 +69,7 @@ export function App() {
         <Route path="/signin" element={<PublicOnlyRoute><Signin /></PublicOnlyRoute>}/>
         <Route path="/verify" element={<PublicOnlyRoute><Verify /></PublicOnlyRoute>} />
         <Route path="/forgotpass" element={<PublicOnlyRoute><Forgotpass /></PublicOnlyRoute>} />
+        <Route path="/api/auth/reset-password/:token" element={<PublicOnlyRoute><ResetPassword/></PublicOnlyRoute>} />
         <Route path="/resendverify" element={<PublicOnlyRoute><Resendverify /></PublicOnlyRoute>} />
 
 
@@ -115,13 +115,13 @@ export function App() {
 
         
 
-        <Route path="/unauthorized" element={<h2>Unauthorized</h2>} />
+        <Route path="/unauthorized" element={<div className="unauthorized-page"><h2>UNAUTHORIZED</h2></div>} />
+                 
 
         
       </Routes>
 
       <Footer />
-          </CartProvider>
 
     </>
   );

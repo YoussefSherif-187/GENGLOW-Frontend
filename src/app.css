@@ -91,7 +91,15 @@
         display: block;
       }
       
+.user-dropdown.open .dropdown-content {
+  display: block;
+}
 
+@media (hover: none) {
+  .user-dropdown:hover .dropdown-content {
+    display: none;
+  }
+}
 
 .dropdown-content button.logout-btn:hover {
     background-color: #ececec; /* same hover effect as links */
@@ -352,7 +360,6 @@
   }
 }
   
-  /* Full width bar */
 .nav {
   width: 100%;
   text-transform: uppercase;
@@ -367,7 +374,6 @@
 
 }
 
-/* Centered content like the screenshot */
 .nav-inner {
   width: 100%;
   max-width: 1280px;
@@ -377,12 +383,10 @@
   justify-content: space-between;
 }
 
-/* Logo */
 .logo img {
   height: 50px;
 }
 
-/* Middle links */
 .bar {
   display: flex;
   gap: 28px;
@@ -390,21 +394,18 @@
 
 
 
-/* Right section */
 .nav-right {
   display: flex;
   align-items: center;
   gap: 100px;
 }
 
-/* Button spacing */
 .butn {
   padding: 8px 14px;
   font-size: 13px;
   border-radius: 4px;
 }
 
-/* User icon */
 .user-icon {
   width: 34px;
   height: 34px;
@@ -426,7 +427,7 @@
   bottom: -6px;
   width: 0%;
   height: 2px;
-  background-color: #16a34a; /* green */
+  background-color: #16a34a; 
   transition: width 0.25s ease;
 }
 
@@ -458,7 +459,6 @@
   color: #fff;
 }
 
-/* ✅ stays green on active page */
 .quiz-outline-btn.active {
   background: #16a34a;
   color: #fff;
@@ -490,6 +490,115 @@
 
   color: #000;
 }
+
+.cart-icon-wrapper {
+  position: relative;
+  cursor: pointer;
+  margin-right: 20px;
+  transition: transform 0.2s ease;
+}
+
+
+
+.cart-icon {
+  width: 26px;
+  height: 26px;
+  transition: filter 0.2s ease;
+}
+
+.cart-icon-wrapper:hover .cart-icon {
+  filter: brightness(0) saturate(100%) invert(34%) sepia(93%) saturate(430%) hue-rotate(85deg) brightness(95%) contrast(90%);
+}
+
+/* ===========================
+   MOBILE & TABLET NAV STYLES
+   =========================== */
+
+@media (max-width: 1024px) {
+  .nav-right {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    height: auto;
+    padding: 8px 0;
+  }
+
+  .nav-inner {
+    flex-wrap: wrap;
+    padding: 0 16px;
+  }
+
+  /* Logo */
+  .logo img {
+    height: 42px;
+  }
+
+  /* Navigation links */
+  .bar {
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+    padding: 12px 0;
+    order: 3;
+  }
+
+  .bar a {
+    font-size: 13px;
+  }
+
+  /* Right side (icons + button) */
+  .nav-right {
+    gap: 20px;
+  }
+
+  .quiz-outline-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .cart-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .user-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-right {
+    width: 100%;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .bar {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .bar a {
+    font-size: 12px;
+  }
+
+  .quiz-outline-btn {
+    width: 100%;
+    max-width: 220px;
+    text-align: center;
+  }
+}
+
 
 .footer {
   background: radial-gradient(
@@ -573,24 +682,15 @@
   text-decoration: none;
 }
 
-.cart-icon-wrapper {
-  position: relative;
-  cursor: pointer;
-  margin-right: 20px;
-  transition: transform 0.2s ease;
+
+.unauthorized-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-
-
-.cart-icon {
-  width: 26px;
-  height: 26px;
-  transition: filter 0.2s ease;
+.unauthorized-page h2 {
+  font-size: 2rem;
+  color: #c0392b;
 }
-
-/* 🔹 Turn cart icon green on hover */
-.cart-icon-wrapper:hover .cart-icon {
-  filter: brightness(0) saturate(100%) invert(34%) sepia(93%) saturate(430%) hue-rotate(85deg) brightness(95%) contrast(90%);
-}
-
-

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import cartProductImage from "../assets/products/prod1.png";
 
 export const CartContext = createContext();
@@ -6,6 +6,15 @@ export const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+  const savedCart = localStorage.getItem("cart");
+  if (savedCart) setCart(JSON.parse(savedCart));
+}, []);
+
+useEffect(() => {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}, [cart]);
+
 
  
   const addToCart = (product) => {

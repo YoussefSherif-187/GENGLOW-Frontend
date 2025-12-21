@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../cart/CartContext";
 import axios from "axios";
+import Alerts from "../comp/Alerts";
 import "../pagesstyles/singleproduct.css";
 
 function SingleProduct() {
@@ -15,34 +16,32 @@ function SingleProduct() {
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // 🔐 Auth + role check
+  const [alert, setAlert] = useState({
+    show: false,
+    type: "",
+    message: "",
+  });
+
   const isLoggedIn = !!localStorage.getItem("token");
   const role = localStorage.getItem("role");
   const canWriteReview = isLoggedIn && role === "user";
 
-  /* =====================
-     PRODUCT IMAGE HELPER
-  ===================== */
   const getProductImage = (prodId) => {
     try {
       return require(`../assets/products/${prodId}.png`);
-    } catch (err) {
+    } catch {
       return require(`../assets/products/prod1.png`);
     }
   };
 
-  /* =====================
-     FETCH PRODUCT
-  ===================== */
+
   useEffect(() => {
     axios
       .get(`https://genglow-backend.vercel.app/api/products/${id}`)
       .then((res) => setProduct(res.data));
   }, [id]);
 
-  /* =====================
-     FETCH REVIEWS
-  ===================== */
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -67,13 +66,18 @@ function SingleProduct() {
       });
   }, [id]);
 
-  /* =====================
-     CREATE REVIEW
-  ===================== */
+
   const submitReview = async (e) => {
     e.preventDefault();
 
-    if (!comment.trim()) return alert("Please write a comment");
+    if (!comment.trim()) {
+      setAlert({
+        show: true,
+        type: "error",
+        message: "Please write a comment",
+      });
+      return;
+    }
 
     try {
       setSubmitting(true);
@@ -95,10 +99,8 @@ function SingleProduct() {
         }
       );
 
-      // add new review instantly
       setReviews((prev) => [res.data.review, ...prev]);
 
-      // recalc rating
       const updated =
         (Number(rating) * reviews.length + newRating) /
         (reviews.length + 1);
@@ -106,11 +108,20 @@ function SingleProduct() {
 
       setComment("");
       setNewRating(5);
+
+      setAlert({
+        show: true,
+        type: "success",
+        message: "Review submitted successfully",
+      });
     } catch (err) {
-      alert(
-        err.response?.data?.message ||
-          "Failed to submit review"
-      );
+      setAlert({
+        show: true,
+        type: "error",
+        message:
+          err.response?.data?.message ||
+          "Failed to submit review",
+      });
     } finally {
       setSubmitting(false);
     }
@@ -131,7 +142,6 @@ function SingleProduct() {
   return (
     <div className="single-product-page">
       <div className="single-product-wrapper">
-        {/* PRODUCT */}
         <div className="product-image">
           <img
             src={getProductImage(product._id)}
@@ -165,9 +175,7 @@ function SingleProduct() {
         </div>
       </div>
 
-      {/* =====================
-          CREATE REVIEW (users only)
-      ===================== */}
+     
       {canWriteReview && (
         <div className="review-form">
           <h3>Write a Review</h3>
@@ -204,13 +212,27 @@ function SingleProduct() {
             >
               {submitting ? "Submitting..." : "Submit Review"}
             </button>
+
+            <br />
+
+            {alert.show && (
+              <Alerts
+                type={alert.type}
+                message={alert.message}
+                onClose={() =>
+                  setAlert({
+                    show: false,
+                    type: "",
+                    message: "",
+                  })
+                }
+              />
+            )}
           </form>
         </div>
       )}
 
-      {/* =====================
-          REVIEWS LIST
-      ===================== */}
+  
       <div className="reviews-section">
         <h2>Customer Reviews</h2>
 

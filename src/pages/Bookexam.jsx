@@ -1,7 +1,7 @@
 import React, {  useEffect,useState } from "react";
 import "../pagesstyles/bookexam.css"
 import axios from "axios"
-import Alerts from "../comp/Alerts" // ✅ standard import
+import Alerts from "../comp/Alerts" 
 
 const Bookexam = () => {
   const [formData, setFormData] = useState({

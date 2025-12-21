@@ -170,3 +170,11 @@
         grid-template-columns: 1fr;
     }
 }
+
+
+.recommended-product-img {
+  width: 160px;      
+  height: 160px;      
+  object-fit: contain; 
+  margin-bottom: 12px;
+}

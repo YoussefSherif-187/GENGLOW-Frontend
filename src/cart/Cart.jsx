@@ -10,9 +10,7 @@ function CartSidebar() {
   const { cart, isOpen, closeCart, increaseQty, decreaseQty } =
     useContext(CartContext);
 
-  /* =====================
-     PRODUCT IMAGE HELPER
-  ===================== */
+  
   const getProductImage = (prodId) => {
     try {
       return require(`../assets/products/${prodId}.png`);
@@ -30,17 +28,20 @@ function CartSidebar() {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
-    if (!token) {
-      closeCart();
-      navigate("/signin");
-      return;
-    }
+   if (!token) {
+  closeCart();
+  window.scrollTo({ top: 0, behavior: "instant" });
+  navigate("/signin");
+  return;
+}
 
-    if (role !== "user") {
-      closeCart();
-      navigate("/unauthorized");
-      return;
-    }
+if (role !== "user") {
+  closeCart();
+  window.scrollTo({ top: 0, behavior: "instant" });
+  navigate("/unauthorized");
+  return;
+}
+
 
     try {
       const formBody = new URLSearchParams();
