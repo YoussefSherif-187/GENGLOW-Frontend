@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { CartContext } from "../cart/CartContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "../pagesstyles/cart.css";
 
 function CartSidebar() {
@@ -10,11 +9,10 @@ function CartSidebar() {
   const { cart, isOpen, closeCart, increaseQty, decreaseQty } =
     useContext(CartContext);
 
-  
   const getProductImage = (prodId) => {
     try {
       return require(`../assets/products/${prodId}.png`);
-    } catch (err) {
+    } catch {
       return require(`../assets/products/prod1.png`);
     }
   };
@@ -24,56 +22,26 @@ function CartSidebar() {
     0
   );
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
-   if (!token) {
-  closeCart();
-  window.scrollTo({ top: 0, behavior: "instant" });
-  navigate("/signin");
-  return;
-}
-
-if (role !== "user") {
-  closeCart();
-  window.scrollTo({ top: 0, behavior: "instant" });
-  navigate("/unauthorized");
-  return;
-}
-
-
-    try {
-      const formBody = new URLSearchParams();
-
-      cart.forEach((item, index) => {
-        formBody.append(`products[${index}][product]`, item._id);
-        formBody.append(`products[${index}][quantity]`, item.quantity);
-      });
-
-      const response = await axios.post(
-        "https://genglow-backend.vercel.app/api/orders",
-        formBody,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const orderId = response.data.order._id;
-
+    if (!token) {
       closeCart();
-      navigate(`/checkout/${orderId}`);
-    } catch (error) {
-      const message =
-        error.response?.data?.message ||
-        "Something went wrong. Please try again.";
-
-      console.error("Create order error:", message);
-      alert(message);
+      window.scrollTo({ top: 0, behavior: "instant" });
+      navigate("/signin");
+      return;
     }
+
+    if (role !== "user") {
+      closeCart();
+      window.scrollTo({ top: 0, behavior: "instant" });
+      navigate("/unauthorized");
+      return;
+    }
+
+    closeCart();
+    navigate("/order");
   };
 
   return (
@@ -139,7 +107,7 @@ if (role !== "user") {
             onClick={handleCheckout}
             disabled={cart.length === 0}
           >
-            Create Order
+            Continue
           </button>
         </div>
       </div>

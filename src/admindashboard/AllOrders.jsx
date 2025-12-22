@@ -117,123 +117,153 @@ const AllOrders = () => {
             <h2 className="page-title">All Orders</h2>
 
             {orders.map(order => (
-  <div key={order._id}>
-    {/* ORDER CARD */}
-    <div className="card">
-      <h3 className="card-title">Order Summary</h3>
+              <div key={order._id}>
+                {/* ORDER CARD */}
+                <div className="card">
+                  <h3 className="card-title">Order Summary</h3>
 
-      <div className="order-row">
-        <span>Order ID</span>
-        <span>{order._id}</span>
-      </div>
+                  <div className="order-row">
+                    <span>Order ID</span>
+                    <span>{order._id}</span>
+                  </div>
 
-      <div className="order-row">
-        <span>User</span>
-        <span>
-          {order.user
-            ? `${order.user.name} (${order.user.email})`
-            : "Guest"}
-        </span>
-      </div>
+                  <div className="order-row">
+                    <span>User</span>
+                    <span>
+                      {order.user
+                        ? `${order.user.name} (${order.user.email})`
+                        : "Guest"}
+                    </span>
+                  </div>
 
-      <div className="order-row">
-        <span>Status</span>
-        <span className={`status ${order.status?.toLowerCase()}`}>
-          {order.status}
-        </span>
-      </div>
+                  <div className="order-row">
+                    <span>Status</span>
+                    <span className={`status ${order.status?.toLowerCase()}`}>
+                      {order.status}
+                    </span>
+                  </div>
 
-      <div className="order-row">
-        <span>Payment</span>
-        <span>{order.paymentStatus}</span>
-      </div>
+                  <div className="order-row">
+                    <span>Payment</span>
+                    <span>{order.paymentStatus}</span>
+                  </div>
 
-      <div className="order-row total">
-        <span>Total</span>
-        <span>${order.totalPrice}</span>
-      </div>
+                  {/* SHIPPING ADDRESS */}
+                  {order.shippingAddress && (
+                    <div className="order-shipping">
+                      <strong>Shipping Address</strong>
 
-      <div className="order-products">
-        <strong>Products</strong>
+                      <div className="order-row">
+                        <span>Full Name</span>
+                        <span>{order.shippingAddress.fullName}</span>
+                      </div>
 
-        {order.products.map((item, index) => (
-          <div className="product-row" key={index}>
-            <span>
-              {item.product ? item.product.name : "Product unavailable"}
-            </span>
-            <span>Qty: {item.quantity}</span>
-          </div>
-        ))}
-      </div>
+                      <div className="order-row">
+                        <span>Phone</span>
+                        <span>{order.shippingAddress.phone}</span>
+                      </div>
 
-      <div className="admin-actions">
-        <button
-          className="secondary-btn"
-          onClick={() => {
-            setEditOrder(order);
-            setStatus(order.status || "");
-            setShippingPartner(order.shippingPartner?._id || "");
-          }}
-        >
-          Update Order
-        </button>
+                      <div className="order-row">
+                        <span>City</span>
+                        <span>{order.shippingAddress.city}</span>
+                      </div>
 
-        <button
-          className="danger-btn"
-          onClick={() => setDeleteOrderId(order._id)}
-        >
-          Delete Order
-        </button>
-      </div>
-    </div>
+                      <div className="order-row">
+                        <span>Governorate</span>
+                        <span>{order.shippingAddress.governorate}</span>
+                      </div>
+                    </div>
+                  )}
 
-    {editOrder?._id === order._id && (
-      <div className="card danger" style={{ marginTop: "10px" }}>
-        <h3 className="card-title">Update Order</h3>
+                  <div className="order-row total">
+                    <span>Total</span>
+                    <span>${order.totalPrice}</span>
+                  </div>
 
-        <label className="form-label">Status</label>
-        <select
-          className="form-input"
-          value={status}
-          onChange={e => setStatus(e.target.value)}
-        >
-          <option value="">Select status</option>
-          <option value="Pending">Pending</option>
-           <option value="Proccessed">Proccessed</option>
-             <option value="Delivered">Delivered</option>
-          <option value="Shipped">Shipped</option>
-          <option value="Completed">Completed</option>
-          <option value="Cancelled">Cancelled</option>
-        </select>
+                  <div className="order-products">
+                    <strong>Products</strong>
 
-        <label className="form-label">Shipping Partner ID</label>
-        <input
-          className="form-input"
-          placeholder="Shipping Partner ID"
-          value={shippingPartner}
-          onChange={e => setShippingPartner(e.target.value)}
-        />
+                    {order.products.map((item, index) => (
+                      <div className="product-row" key={index}>
+                        <span>
+                          {item.product
+                            ? item.product.name
+                            : "Product unavailable"}
+                        </span>
+                        <span>Qty: {item.quantity}</span>
+                      </div>
+                    ))}
+                  </div>
 
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button className="primary-btn" onClick={handleUpdateOrder}>
-            Save Changes
-          </button>
-          <button
-            className="secondary-btn"
-            onClick={() => setEditOrder(null)}
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    )}
-  </div>
-))}
+                  <div className="admin-actions">
+                    <button
+                      className="secondary-btn"
+                      onClick={() => {
+                        setEditOrder(order);
+                        setStatus(order.status || "");
+                        setShippingPartner(order.shippingPartner?._id || "");
+                      }}
+                    >
+                      Update Order
+                    </button>
 
+                    <button
+                      className="danger-btn"
+                      onClick={() => setDeleteOrderId(order._id)}
+                    >
+                      Delete Order
+                    </button>
+                  </div>
+                </div>
+
+                {/* UPDATE CARD */}
+                {editOrder?._id === order._id && (
+                  <div className="card danger" style={{ marginTop: "10px" }}>
+                    <h3 className="card-title">Update Order</h3>
+
+                    <label className="form-label">Status</label>
+                    <select
+                      className="form-input"
+                      value={status}
+                      onChange={e => setStatus(e.target.value)}
+                    >
+                      <option value="">Select status</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Proccessed">Proccessed</option>
+                      <option value="Shipped">Shipped</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
+
+                    <label className="form-label">Shipping Partner ID</label>
+                    <input
+                      className="form-input"
+                      placeholder="Shipping Partner ID"
+                      value={shippingPartner}
+                      onChange={e => setShippingPartner(e.target.value)}
+                    />
+
+                    <div style={{ display: "flex", gap: "10px" }}>
+                      <button
+                        className="primary-btn"
+                        onClick={handleUpdateOrder}
+                      >
+                        Save Changes
+                      </button>
+                      <button
+                        className="secondary-btn"
+                        onClick={() => setEditOrder(null)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </>
         )}
-
-        
       </main>
     </div>
   );

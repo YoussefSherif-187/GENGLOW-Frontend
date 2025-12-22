@@ -111,3 +111,21 @@ all-orders {
   font-size: 16px;
   font-weight: 500;
 }
+
+
+.order-shipping {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #222;
+}
+
+.order-shipping strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.order-shipping .order-row span:first-child {
+  color: #aaa;
+}

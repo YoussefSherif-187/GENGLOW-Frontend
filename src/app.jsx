@@ -46,6 +46,7 @@ import Shop from "./pages/Shop";
 import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
 import ResetPassword from "./pages/ResetPassword";
+import Order from "./pages/Order";
 
 export function App() {
   return (
@@ -88,6 +89,7 @@ export function App() {
         <Route path="/user/reviews" element={<Privateroutes allowedRoles={['user']}><MyReviews /></Privateroutes>} />
         <Route path="/user/samples" element={<Privateroutes allowedRoles={['user']}><Samples/></Privateroutes>} />
         <Route path="/user/exams" element={<Privateroutes allowedRoles={['user']}><Exams/></Privateroutes>} />
+        <Route path="/order" element={<Privateroutes allowedRoles={['user']}><Order/></Privateroutes>} />
         <Route path="/checkout/:orderId" element={<Privateroutes allowedRoles={['user']}><Checkout/></Privateroutes>} />
         <Route path="/success/:orderId" element={<Privateroutes allowedRoles={['user']}><Success/></Privateroutes>} />
 
