@@ -3,7 +3,7 @@ import axios from "axios";
 
 import AdminSidebar from "../comp/AdminSidebar";
 import Alerts from "../comp/Alerts";
-import ConfirmModal from "../comp/ConfirmModal";
+import ConfirmModal2 from "../comp/ConfirmModal2";
 
 import "../pagesstyles/dashboard.css";
 import "../adminstyles/allsamplerequests.css";
@@ -80,7 +80,7 @@ const AllSampleRequests = () => {
       <main className="main-content all-sample-requests">
         {alertType && <Alerts type={alertType} message={alertMessage} />}
 
-        <ConfirmModal
+        <ConfirmModal2
           show={confirmUpdate}
           message="Are you sure you want to update this sample request?"
           confirmText="Yes, Update"
@@ -202,3 +202,4 @@ const AllSampleRequests = () => {
 };
 
 export default AllSampleRequests;
+
