@@ -67,7 +67,7 @@ const ReportsAnalytics = () => {
         totalSamples: samples.length,
 
         pendingOrders: orders.filter(o => o.status === 'Pending').length,
-        completedOrders: orders.filter(o => o.status === 'Completed').length,
+        deliveredOrders: orders.filter(o => o.status === 'Delivered').length,
         cancelledOrders: orders.filter(o => o.status === 'Cancelled').length,
 
         pendingSamples: samples.filter(s => s.status === 'Pending').length
@@ -132,9 +132,10 @@ const ReportsAnalytics = () => {
               </div>
 
               <div className="status-row">
-                <span>Completed Orders</span>
-                <span>{stats.completedOrders}</span>
-              </div>
+  <span>Delivered Orders</span>
+  <span>{stats.deliveredOrders}</span>
+</div>
+
 
               <div className="status-row">
                 <span>Cancelled Orders</span>
