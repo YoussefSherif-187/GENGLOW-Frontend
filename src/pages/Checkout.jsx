@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import "../pagesstyles/checkout.css";
 
 function Checkout() {
@@ -29,16 +28,9 @@ function Checkout() {
     const fetchOrder = async () => {
       try {
         setLoading(true);
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
 
-        const res = await axios.get(
-          `https://genglow-backend.vercel.app/api/orders/${orderId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const res = await Promise.resolve({ data: { mock: true } })
 
         setOrder(res.data);
       } catch (err) {
@@ -57,21 +49,12 @@ function Checkout() {
   const handlePayment = async () => {
     try {
       setPaying(true);
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       const formBody = new URLSearchParams();
       formBody.append("orderId", orderId);
 
-      await axios.post(
-        "https://genglow-backend.vercel.app/api/payments/checkout",
-        formBody,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Promise.resolve({ data: { mock: true } })
 
       navigate(`/success/${orderId}`);
     } catch (err) {

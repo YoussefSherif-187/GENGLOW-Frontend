@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../cart/CartContext";
-import axios from "axios";
 import Alerts from "../comp/Alerts";
 import "../pagesstyles/singleproduct.css";
 
@@ -22,8 +21,8 @@ function SingleProduct() {
     message: "",
   });
 
-  const isLoggedIn = !!localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  const isLoggedIn = !!sessionStorage.getItem("token");
+  const role = sessionStorage.getItem("role");
   const canWriteReview = isLoggedIn && role === "user";
 
   const getProductImage = (prodId) => {
@@ -33,41 +32,25 @@ function SingleProduct() {
       return require(`../assets/products/prod1.png`);
     }
   };
-
+  useEffect(() => {
+    const mockProducts = [
+      { _id: "1", name: "Glow Cleanser", price: 24.99, description: "A gentle daily cleanser.", category: "Skincare" },
+      { _id: "2", name: "GenGlow Serum", price: 39.99, description: "A personalized glow serum.", category: "Skincare" },
+      { _id: "3", name: "Daily Glow Cream", price: 29.99, description: "A nourishing daily moisturizer.", category: "Skincare" },
+    ];
+    setProduct(mockProducts.find((item) => String(item._id) === String(id)) || mockProducts[0]);
+  }, [id]);
 
   useEffect(() => {
-    axios
-      .get(`https://genglow-backend.vercel.app/api/products/${id}`)
-      .then((res) => setProduct(res.data));
+    setReviews([
+      { rating: 5, comment: "Great product and lovely texture." },
+      { rating: 4, comment: "Feels good on the skin." },
+    ]);
+    setRating("4.5");
   }, [id]);
 
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    axios
-      .get(
-        `https://genglow-backend.vercel.app/api/reviews/product/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        setReviews(res.data);
-
-        if (res.data.length > 0) {
-          const avg =
-            res.data.reduce((s, r) => s + r.rating, 0) /
-            res.data.length;
-          setRating(avg.toFixed(1));
-        }
-      });
-  }, [id]);
-
-
-  const submitReview = async (e) => {
+  const submitReview = (e) => {
     e.preventDefault();
 
     if (!comment.trim()) {
@@ -79,58 +62,25 @@ function SingleProduct() {
       return;
     }
 
-    try {
-      setSubmitting(true);
-      const token = localStorage.getItem("token");
-
-      const formBody = new URLSearchParams();
-      formBody.append("product", id);
-      formBody.append("rating", newRating);
-      formBody.append("comment", comment);
-
-      const res = await axios.post(
-        "https://genglow-backend.vercel.app/api/reviews",
-        formBody,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setReviews((prev) => [res.data.review, ...prev]);
-
-      const updated =
-        (Number(rating) * reviews.length + newRating) /
-        (reviews.length + 1);
-      setRating(updated.toFixed(1));
-
-      setComment("");
-      setNewRating(5);
-
-      setAlert({
-        show: true,
-        type: "success",
-        message: "Review submitted successfully",
-      });
-    } catch (err) {
-      setAlert({
-        show: true,
-        type: "error",
-        message:
-          err.response?.data?.message ||
-          "Failed to submit review",
-      });
-    } finally {
-      setSubmitting(false);
-    }
+    const newReview = { rating: newRating, comment };
+    setReviews((prev) => [...prev, newReview]);
+    setRating((prev) => {
+      const numericPrev = Number(prev) || 0;
+      const count = reviews.length;
+      return ((numericPrev * count + newRating) / (count + 1)).toFixed(1);
+    });
+    setComment("");
+    setNewRating(5);
+    setAlert({
+      show: true,
+      type: "success",
+      message: "Review submitted successfully!",
+    });
   };
 
-  if (!product) return <div className="loading">Loading...</div>;
 
   const renderStars = (value) => {
-    const full = Math.floor(value);
+    const full = Math.floor(Number(value) || 0);
     return (
       <span className="stars">
         {"★".repeat(full)}
@@ -138,6 +88,8 @@ function SingleProduct() {
       </span>
     );
   };
+
+  if (!product) return null;
 
   return (
     <div className="single-product-page">

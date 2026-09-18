@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import keypic from '../assets/key.png'
 import "../pagesstyles/signup.css"
 import Alerts from "../comp/Alerts";
@@ -9,31 +8,14 @@ const Verify = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   
-  const VerifyHanlder = async () => {
-    await axios
-      .post("https://genglow-backend.vercel.app/api/auth/verify-email", {
-        email: email,
-        code: code,
-      })
-      .then(response => {
-        setSuccessMessage("Email verfied successfully!");
+  const VerifyHanlder = () => {
+    if (!email.trim() || !code.trim()) {
+      setErrorMessage("Please enter your email and verification code.");
+      setSuccessMessage("");
+      return;
+    }
+    setSuccessMessage("Email verified successfully!");
     setErrorMessage("");
-      })
-      .catch(error => {
-        console.log("Full error response:", error.response);
-
-  const data = error?.response?.data;
-
-  const backendMessage =
-    data?.message ||
-    data?.error ||
-    data?.msg ||
-    (typeof data === "string" ? data : null) ||
-    "An unexpected error occurred.";
-
-  setErrorMessage(backendMessage);
-  setSuccessMessage("");
-      });
   };
   return (
   

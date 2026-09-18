@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
 import { AuthContext } from "../auth/AuthContext";
 import keypic from "../assets/key.png";
 import Alerts from "../comp/Alerts";

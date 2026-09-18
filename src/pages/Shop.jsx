@@ -30,48 +30,21 @@ const Shop = () => {
   };
 
   /* =====================
-     FETCH PRODUCTS
+     MOCK PRODUCTS — FRONTEND ONLY
   ===================== */
   useEffect(() => {
-    fetch("https://genglow-backend.vercel.app/api/products")
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data);
-        setFilteredProducts(data);
-        fetchRatings(data);
-      });
+    const mockProducts = [
+      { _id: "1", name: "Glow Cleanser", price: 450, category: "Skincare", description: "Gentle daily cleanser" },
+      { _id: "2", name: "GenGlow Serum", price: 750, category: "Skincare", description: "Personalized glow serum" },
+      { _id: "3", name: "Daily Glow Cream", price: 600, category: "Skincare", description: "Nourishing daily moisturizer" },
+      { _id: "4", name: "Glow Hair Mask", price: 500, category: "Haircare", description: "Repairing hair treatment" },
+      { _id: "5", name: "GenGlow Shampoo", price: 350, category: "Haircare", description: "Gentle strengthening shampoo" },
+      { _id: "6", name: "Glow Sunscreen", price: 550, category: "Skincare", description: "Daily broad-spectrum protection" },
+    ];
+    setProducts(mockProducts);
+    setFilteredProducts(mockProducts);
+    setRatings(Object.fromEntries(mockProducts.map((product) => [product._id, 4.5])));
   }, []);
-
-  /* =====================
-     FETCH RATINGS
-  ===================== */
-  const fetchRatings = async (products) => {
-    const ratingMap = {};
-
-    await Promise.all(
-      products.map(async (product) => {
-        try {
-          const res = await fetch(
-            `https://genglow-backend.vercel.app/api/reviews/product/${product._id}`
-          );
-          const reviews = await res.json();
-
-          if (reviews.length > 0) {
-            const avg =
-              reviews.reduce((sum, r) => sum + r.rating, 0) /
-              reviews.length;
-            ratingMap[product._id] = avg.toFixed(1);
-          } else {
-            ratingMap[product._id] = 0;
-          }
-        } catch {
-          ratingMap[product._id] = 0;
-        }
-      })
-    );
-
-    setRatings(ratingMap);
-  };
 
   /* =====================
      FILTER LOGIC

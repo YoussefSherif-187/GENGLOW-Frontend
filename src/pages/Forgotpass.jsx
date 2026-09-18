@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "../pagesstyles/signup.css"
 import Alerts from "../comp/Alerts";
 
@@ -9,30 +8,14 @@ const Forgotpass = () => {
   
   const [email, setEmail] = useState("");
 
-  const ForgotpassHanlder = async () => {
-    await axios
-      .post("https://genglow-backend.vercel.app/api/auth/forgot-password", {
-        email: email,
-      })
-      .then(response => {
-        setSuccessMessage("Password reset link sent to your email");
+  const ForgotpassHanlder = () => {
+    if (!email.trim()) {
+      setErrorMessage("Please enter your email.");
+      setSuccessMessage("");
+      return;
+    }
+    setSuccessMessage("Password reset link sent to your email.");
     setErrorMessage("");
-      })
-      .catch(error => {
-        console.log("Full error response:", error.response);
-
-  const data = error?.response?.data;
-
-  const backendMessage =
-    data?.message ||
-    data?.error ||
-    data?.msg ||
-    (typeof data === "string" ? data : null) ||
-    "An unexpected error occurred.";
-
-  setErrorMessage(backendMessage);
-  setSuccessMessage("");
-      });
   };
 
   return (

@@ -1,6 +1,5 @@
 import React, {  useEffect,useState } from "react";
 import "../pagesstyles/bookexam.css"
-import axios from "axios"
 import Alerts from "../comp/Alerts" 
 
 const Bookexam = () => {
@@ -12,14 +11,14 @@ const Bookexam = () => {
   const [loading, setLoading] = useState(false)
   const [activeFaq, setActiveFaq] = useState(null)
   const [alert, setAlert] = useState({ type: "", message: "" })
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
-        const [role, setRole] = useState(localStorage.getItem("role"));
+  const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem("token"));
+        const [role, setRole] = useState(sessionStorage.getItem("role"));
       
     
        useEffect(() => {
           const syncAuth = () => {
-            setIsLoggedIn(!!localStorage.getItem("token"));
-            setRole(localStorage.getItem("role"));
+            setIsLoggedIn(!!sessionStorage.getItem("token"));
+            setRole(sessionStorage.getItem("role"));
           };
       
           window.addEventListener("storage", syncAuth);
@@ -36,24 +35,7 @@ const Bookexam = () => {
 
     try {
       setLoading(true)
-
-      const token = localStorage.getItem("token")
-      const formBody = new URLSearchParams()
-
-      formBody.append("date", formData.preferredDate)
-      formBody.append("notes", formData.notes)
-
-      await axios.post(
-        "https://genglow-backend.vercel.app/api/examinations",
-        formBody,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
+      await Promise.resolve({ data: { mock: true } })
       setAlert({
         type: "success",
         message: "Examination booked successfully!"

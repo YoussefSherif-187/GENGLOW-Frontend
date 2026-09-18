@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import "../pagesstyles/signup.css";
 import Alerts from "../comp/Alerts";
@@ -12,35 +11,14 @@ const ResetPassword = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const ResetPasswordHandler = async () => {
-    await axios
-      .post(
-        `https://genglow-backend.vercel.app/api/auth/reset-password/${token}`,
-        {
-          password: password,
-        }
-      )
-      .then((response) => {
-        setSuccessMessage(
-          response?.data?.message || "Password has been reset successfully!"
-        );
-        setErrorMessage("");
-      })
-      .catch((error) => {
-        console.log("Full error response:", error.response);
-
-        const data = error?.response?.data;
-
-        const backendMessage =
-          data?.message ||
-          data?.error ||
-          data?.msg ||
-          (typeof data === "string" ? data : null) ||
-          "An unexpected error occurred.";
-
-        setErrorMessage(backendMessage);
-        setSuccessMessage("");
-      });
+  const ResetPasswordHandler = () => {
+    if (password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long.");
+      setSuccessMessage("");
+      return;
+    }
+    setSuccessMessage("Password has been reset successfully!");
+    setErrorMessage("");
   };
 
   return (

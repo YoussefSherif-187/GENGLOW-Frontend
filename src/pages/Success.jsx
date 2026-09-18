@@ -1,7 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { CartContext } from "../cart/CartContext";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import "../pagesstyles/success.css";
 
 function Success() {
@@ -25,16 +24,9 @@ function Success() {
 
     const fetchOrder = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
 
-        const res = await axios.get(
-          `https://genglow-backend.vercel.app/api/orders/${orderId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const res = await Promise.resolve({ data: { mock: true } })
 
         setOrder(res.data);
         clearCart(); // ✅ clear cart only after order is confirmed

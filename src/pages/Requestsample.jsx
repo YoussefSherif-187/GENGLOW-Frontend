@@ -1,20 +1,19 @@
 import React, {  useEffect,useState } from "react";
 import "../pagesstyles/requestsample.css";
-import axios from "axios";
 import Alerts from "../comp/Alerts"; 
 
 const Requestsample = () => {
   
   const [selectedSamples, setSelectedSamples] = useState([]);
   const [alert, setAlert] = useState({ type: "", message: "" });
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
-      const [role, setRole] = useState(localStorage.getItem("role"));
+    const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem("token"));
+      const [role, setRole] = useState(sessionStorage.getItem("role"));
     
   
      useEffect(() => {
         const syncAuth = () => {
-          setIsLoggedIn(!!localStorage.getItem("token"));
-          setRole(localStorage.getItem("role"));
+          setIsLoggedIn(!!sessionStorage.getItem("token"));
+          setRole(sessionStorage.getItem("role"));
         };
     
         window.addEventListener("storage", syncAuth);
@@ -65,21 +64,12 @@ const Requestsample = () => {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       const formBody = new URLSearchParams();
       formBody.append("productId", selectedSamples[0]);
 
-      const response = await axios.post(
-        "https://genglow-backend.vercel.app/api/samplerequests",
-        formBody,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await Promise.resolve({ data: { mock: true } })
 
       setAlert({
         type: "success",

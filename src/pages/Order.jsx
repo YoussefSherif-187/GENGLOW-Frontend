@@ -1,8 +1,6 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../cart/CartContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
 import Alerts from "../comp/Alerts";
 
 import "../pagesstyles/checkout.css";
@@ -65,7 +63,7 @@ function Order() {
 
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       const formBody = new URLSearchParams();
 
@@ -82,16 +80,7 @@ function Order() {
         shipping.governorate
       );
 
-      const res = await axios.post(
-        "https://genglow-backend.vercel.app/api/orders",
-        formBody,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await Promise.resolve({ data: { mock: true } })
 
       navigate(`/checkout/${res.data.order._id}`);
     } catch (err) {

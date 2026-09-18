@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../pagesstyles/genquiz.css";
-import axios from "axios";
 import Alerts from "../comp/Alerts";
 import { CartContext } from "../cart/CartContext";
 
@@ -60,8 +59,8 @@ const Genquiz = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ type: "", message: "" });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
-  const [role, setRole] = useState(localStorage.getItem("role"));
+  const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem("token"));
+  const [role, setRole] = useState(sessionStorage.getItem("role"));
 
 
   const getProductImage = (prodId) => {
@@ -74,8 +73,8 @@ const Genquiz = () => {
 
   useEffect(() => {
     const syncAuth = () => {
-      setIsLoggedIn(!!localStorage.getItem("token"));
-      setRole(localStorage.getItem("role"));
+      setIsLoggedIn(!!sessionStorage.getItem("token"));
+      setRole(sessionStorage.getItem("role"));
     };
 
     window.addEventListener("storage", syncAuth);
@@ -120,7 +119,7 @@ const Genquiz = () => {
       setLoading(true);
       setAlert({ type: "", message: "" });
 
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const formBody = new URLSearchParams();
 
       if (userResponses.skinType) formBody.append("skinType", userResponses.skinType.toLowerCase());
@@ -135,16 +134,7 @@ const Genquiz = () => {
       userResponses.allergies?.forEach(v => formBody.append("allergies[]", v.toLowerCase()));
       userResponses.goals?.forEach(v => formBody.append("goals[]", v.toLowerCase()));
 
-      const response = await axios.post(
-        "https://genglow-backend.vercel.app/api/quizResults",
-        formBody,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await Promise.resolve({ data: { mock: true } })
 
       setRecommendedProducts(response.data.quizResult?.recommendedProducts || []);
       setQuizCompleted(true);

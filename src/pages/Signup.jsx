@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import keypic from "../assets/key.png";
 import user2 from "../assets/user2.png";
 import "../pagesstyles/signup.css";
-import axios from "axios";
 import Alerts from "../comp/Alerts";
 
 const Signup = () => {
@@ -13,35 +12,15 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  const SignupHanlder = async () => {
-     if (password.length < 6) {
-    setErrorMessage("Password must be at least 6 characters long.");
-    return;
-  }
-    await axios
-      .post("https://genglow-backend.vercel.app/api/auth/register", {
-        name: name,
-        email: email,
-        password: password,
-      })
-      .then(response => {
-        navigate('/verify');
-      })
-      .catch(error => {
-        console.log("Full error response:", error.response);
-
-  const data = error?.response?.data;
-
-  const backendMessage =
-    data?.message ||
-    data?.error ||
-    data?.msg ||
-    (typeof data === "string" ? data : null) ||
-    "An unexpected error occurred.";
-
-  setErrorMessage(backendMessage);
-
-      });
+  const SignupHanlder = () => {
+    if (password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long.");
+      return;
+    }
+    sessionStorage.setItem("mockUser", JSON.stringify({ name, email }));
+    sessionStorage.setItem("token", "mock-token");
+    sessionStorage.setItem("role", "user");
+    navigate("/verify");
   };
 
   return (
